@@ -83,12 +83,14 @@ public class Usuario extends HttpServlet {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
+			String telefone = request.getParameter("telefone");
 
 			BeanJSP usuario = new BeanJSP();
 			usuario.setId(!id.isEmpty() ? Long.parseLong(id) : null);
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
 			usuario.setNome(nome);
+			usuario.setTelefone(telefone);
 
 			try {
 				

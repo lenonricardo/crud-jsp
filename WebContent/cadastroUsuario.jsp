@@ -21,6 +21,14 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+
+
 <title>Cadastro de Usuário</title>
 </head>
 <body class="body">
@@ -69,7 +77,10 @@
 					type="password" class="form-control" placeholder="Senha"
 					name="senha" id="senha" value="${user.senha}" required /> <input
 					type="text" class="form-control" placeholder="Nome" name="nome"
-					id="nome" value="${user.nome}" required />
+					id="nome" value="${user.nome}" required /> <input type="text"
+					class="form-control" placeholder="Telefone" name="telefone"
+					id="telefone" value="${user.telefone}" />
+
 
 
 
@@ -96,6 +107,7 @@
 					<th scope="col">Código</th>
 					<th scope="col">Login</th>
 					<th scope="col">Nome</th>
+					<th scope="col">Telefone</th>
 					<th scope="col">Editar</th>
 					<th scope="col">Excluir</th>
 				</tr>
@@ -106,6 +118,7 @@
 						<th scope="row"><c:out value="${user.id}" /></th>
 						<td><c:out value="${user.login}" /></td>
 						<td><c:out value="${user.nome}" /></td>
+						<td><c:out value="${user.telefone}" /></td>
 						<td><a class="edit"
 							href="salvarUsuario?acao=editar&user=${user.id}"><i
 								class="far fa-edit"></i></a></td>
@@ -118,5 +131,10 @@
 			</tbody>
 		</table>
 	</div>
+
+	<script type="text/javascript">
+    $("#telefone").mask("(00) 00000-0000");
+</script>
 </body>
 </html>
+
