@@ -84,6 +84,8 @@ public class Usuario extends HttpServlet {
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
 			String telefone = request.getParameter("telefone");
+			Boolean status = true;
+			
 
 			BeanJSP usuario = new BeanJSP();
 			usuario.setId(!id.isEmpty() ? Long.parseLong(id) : null);
@@ -96,6 +98,7 @@ public class Usuario extends HttpServlet {
 				
 				if(id==null || id.isEmpty() && !daousuario.validarLogin(login)) {
 					request.setAttribute("msg", "<div class=\"alert alert-danger\" role=\"alert\"><strong>Atenção! </strong>Usuário já existe com o mesmo login</div>");
+					status = false;
 				}
 				
 				if (id == null || id.isEmpty() && daousuario.validarLogin(login)) {
@@ -103,15 +106,23 @@ public class Usuario extends HttpServlet {
 					daousuario.salvar(usuario);
 					request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\"><strong>Sucesso! </strong>O usuário foi cadastro!</div>");
 
-				} else if(id!= null && !id.isEmpty()) {
+				} else if(id!= null && !id.isEmpty() && daousuario.validarLoginUpdate(login, id)) {
 					daousuario.atualizar(usuario);
 					request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\"><strong>Sucesso! </strong>Seu cadastro foi alterado!</div>");
 
+				}else {
+					request.setAttribute("msg", "<div class=\"alert alert-danger\" role=\"alert\"><strong>Atenção! </strong>Usuário já existe com o mesmo login</div>");
+					status = false;
+				}
+				if(!status) {
+					request.setAttribute("user", usuario);
 				}
 				try {
+					
 					RequestDispatcher view = request.getRequestDispatcher("cadastroUsuario.jsp");
 					request.setAttribute("usuarios", daousuario.listar());
 					view.forward(request, response);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

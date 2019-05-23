@@ -42,7 +42,7 @@ public class DaoUsuario {
 	
 	public List<BeanJSP> listar() throws Exception{
 		List<BeanJSP> listar = new ArrayList<BeanJSP>();
-		String sql = "SELECT * FROM usuario";
+		String sql = "SELECT * FROM usuario ORDER BY id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultset = statement.executeQuery();
 		
@@ -133,6 +133,21 @@ public class DaoUsuario {
 		}
 		return false;
 	}
+	
+	public boolean validarLoginUpdate(String login, String id) throws SQLException {
+		String sql = "select count(1) as qtd from usuario where login = '"+login+"' AND id <> "+id;
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		if(resultSet.next()) {
+			
+			
+			return resultSet.getInt("qtd") <= 0;
+			
+		}
+		return false;
+	}
+	
+
 
 
 }
